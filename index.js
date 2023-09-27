@@ -6,7 +6,7 @@ require('dotenv').config()
 
 app.use(express.json())
 
-const connectDB = require('./connectMongo')
+const connectDB = require('./config/db')
 
 connectDB()
 
