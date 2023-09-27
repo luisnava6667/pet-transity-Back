@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const departamentoSchema = mongoose.Schema({
   nombre: {
@@ -536,3 +536,7 @@ const departamentoSchema = mongoose.Schema({
     ]
   }
 })
+
+const Departamento = mongoose.model('Departamento', departamentoSchema)
+
+module.exports = Departamento

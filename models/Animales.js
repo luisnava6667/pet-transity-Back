@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const animalesSchema = mongoose.Schema({
   especie: {
@@ -53,3 +53,7 @@ const animalesSchema = mongoose.Schema({
   }
 })
 //! Solo para capital federal
+
+
+const Animales = mongoose.model('Animales', animalesSchema)
+module.exports = Animales

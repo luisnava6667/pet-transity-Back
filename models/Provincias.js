@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const provinciaSchema = mongoose.Schema({
   nombre: {
@@ -31,3 +31,7 @@ const provinciaSchema = mongoose.Schema({
     ]
   }
 })
+
+const Provincias = mongoose.model('Provincias', provinciaSchema)
+
+module.exports = Provincias

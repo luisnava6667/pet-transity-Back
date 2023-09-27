@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
+
 
 const redesSchema = mongoose.Schema({
   nombre: {
@@ -10,3 +11,7 @@ const redesSchema = mongoose.Schema({
     required: true
   }
 })
+
+const Redes = mongoose.model('Redes', redesSchema)
+
+module.exports = Redes
