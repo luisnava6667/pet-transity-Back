@@ -1,8 +1,10 @@
-const express = require('express')
-const { registrar } = require('../controllers/index')
+import express from 'express'
+import { autenticar, confirmar, nuevoUsuario } from '../controllers/index.js'
 
 const router = express.Router()
 
-router.post('/', registrar)
+router.post('/', nuevoUsuario)
+router.post('/login', autenticar)
+router.get('/confirmar/:token', confirmar)
 
-module.exports = router
+export default router

@@ -1,1 +1,1 @@
-// const us
+export { default as usuarioRoutes} from './usuarioRoutes.js'

@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
+import { usuarioRoutes } from './routes/index.js'
 
 const app = express()
 
@@ -15,10 +16,10 @@ connectDB()
 //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 //   next()
 // })
-app.get('/', async (req, res) => {
-  res.send('Hello World!')
-})
-const PORT = process.env.PORT
+
+app.use('/usuarios', usuarioRoutes)
+
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
   console.log(`⚡️ Server running on port ${PORT}!!! ⚡️`)

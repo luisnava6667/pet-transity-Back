@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const usuarioSchema = mongoose.Schema({
   nombre: {
@@ -29,14 +29,14 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  provincia: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Provincia'
-  },
-  departamento: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Departamento'
-  },
+  // provincia: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Provincia'
+  // },
+  // departamento: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Departamento'
+  // },
   localidad: {
     type: String,
     require: true
@@ -73,11 +73,18 @@ const usuarioSchema = mongoose.Schema({
   estado_domicilio: {
     type: String,
     require: true
+  },
+  confirmado: {
+    type: Boolean,
+    default: false
+  },
+  token: {
+    type: String
   }
 })
 
 usuarioSchema.pre('save', async function (next) {
-  if(!this.isModified('password')) {
+  if (!this.isModified('password')) {
     next()
   }
   const salt = await bcrypt.genSalt(10)
@@ -87,7 +94,6 @@ usuarioSchema.methods.matchPassword = async function (password) {
   return await bcrypt.compare(password, this.password)
 }
 
-const Usuario  = mongoose.model('Refugio', usuarioSchema)
+const Usuario = mongoose.model('Usuario', usuarioSchema)
 
-
-module.exports = Usuario
+export default Usuario
