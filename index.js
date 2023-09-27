@@ -1,12 +1,13 @@
-const express = require('express')
+import express from 'express'
+import dotenv from 'dotenv'
+import connectDB from './config/db.js'
 
-const app = express()
+
+dotenv.config()
 
 require('dotenv').config()
 
 app.use(express.json())
-
-const connectDB = require('./config/db')
 
 connectDB()
 
