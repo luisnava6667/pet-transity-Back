@@ -5,8 +5,6 @@ import connectDB from './config/db.js'
 
 dotenv.config()
 
-require('dotenv').config()
-
 app.use(express.json())
 
 connectDB()
