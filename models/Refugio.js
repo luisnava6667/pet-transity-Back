@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const refugioSchema = mongoose.Schema({
   razon_social: {
@@ -33,14 +33,14 @@ const refugioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  provincia: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Provincia'
-  },
-  departamento: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Departamento'
-  },
+  // provincia: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Provincia'
+  // },
+  // departamento: {//ver
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Departamento'
+  // },
   localidad: {
     type: String,
     require: true
@@ -55,14 +55,21 @@ const refugioSchema = mongoose.Schema({
   whatsApp: {
     type: String
   },
-  redes_link: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Redes'
+  confirmado: {
+    type: Boolean,
+    default: false
+  },
+  token: {
+    type: String
   }
+  // redes_link: {//ver
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Redes'
+  // }
 })
 
 refugioSchema.pre('save', async function (next) {
-  if(!this.isModified('password')) {
+  if (!this.isModified('password')) {
     next()
   }
   const salt = await bcrypt.genSalt(10)
@@ -74,5 +81,4 @@ refugioSchema.methods.matchPassword = async function (password) {
 
 const Refugio = mongoose.model('Refugio', refugioSchema)
 
-
-module.exports = Refugio
+export default Refugio
