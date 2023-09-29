@@ -50,6 +50,10 @@ const animalesSchema = mongoose.Schema({
   image: {
     type: String,
     required: true
+  },
+  refugio: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Refugio'
   }
 })
 //! Solo para capital federal

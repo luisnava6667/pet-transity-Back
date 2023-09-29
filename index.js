@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
-import { refugioRoutes, usuarioRoutes } from './routes/index.js'
+import { animalesRoutes, refugioRoutes, usuarioRoutes } from './routes/index.js'
 
 const app = express()
 
@@ -19,6 +19,7 @@ connectDB()
 
 app.use('/usuarios', usuarioRoutes)
 app.use('/refugio', refugioRoutes)
+app.use('/animales', animalesRoutes)
 
 const PORT = process.env.PORT || 5000
 
