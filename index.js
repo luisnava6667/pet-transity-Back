@@ -5,8 +5,8 @@ import { animalesRoutes, refugioRoutes, usuarioRoutes } from './routes/index.js'
 
 const app = express()
 
-dotenv.config()
 app.use(express.json())
+dotenv.config()
 
 connectDB()
 

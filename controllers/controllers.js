@@ -1,4 +1,5 @@
 import { generarId, generarJWT } from '../helpers/index.js'
+import { emailRegistro } from '../helpers/sendEmail.js'
 const newEntrie = async (req, res, model) => {
   const { email } = req.body
   const existeUsuario = await model.findOne({ email })
@@ -8,6 +9,7 @@ const newEntrie = async (req, res, model) => {
     const usuario = new model(req.body)
     usuario.token = generarId(usuario._id)
     await usuario.save()
+    emailRegistro(usuario)
     res.json({
       msg: 'Usuario creado con exito, por favor revisa tu email para activar tu cuenta'
     })

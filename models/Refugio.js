@@ -2,6 +2,14 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const refugioSchema = mongoose.Schema({
+  nombre: {
+    type: String,
+    required: true
+  },
+  apellido: {
+    type: String,
+    required: true
+  },
   razon_social: {
     type: String,
     required: true
@@ -33,14 +41,14 @@ const refugioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  // provincia: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Provincia'
-  // },
-  // departamento: {//ver
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Departamento'
-  // },
+  provincia: {
+    type: String,
+    require: true,
+    default: 'CABA'
+  },
+  departamento: {
+    type: String
+  },
   localidad: {
     type: String,
     require: true
@@ -55,17 +63,28 @@ const refugioSchema = mongoose.Schema({
   whatsApp: {
     type: String
   },
+  facebook: {
+    type: String
+  },
+  youtube: {
+    type: String
+  },
+  instagram: {
+    type: String
+  },
+  pets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Animales'
+    }
+  ],
+  token: {
+    type: String
+  },
   confirmado: {
     type: Boolean,
     default: false
-  },
-  token: {
-    type: String
   }
-  // redes_link: {//ver
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Redes'
-  // }
 })
 
 refugioSchema.pre('save', async function (next) {
