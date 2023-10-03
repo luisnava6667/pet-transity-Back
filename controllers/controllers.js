@@ -1,5 +1,5 @@
 import { generarId, generarJWT } from '../helpers/index.js'
-import { emailRegistro } from '../helpers/sendEmail.js'
+import { emailRecuperar, emailRegistro } from '../helpers/sendEmail.js'
 const newEntrie = async (req, res, model) => {
   const { email } = req.body
   const existeUsuario = await model.findOne({ email })
@@ -25,6 +25,7 @@ const newPassword = async (req, res, model) => {
     usuario.password = password
     usuario.token = ''
     await usuario.save()
+
     res.json({
       msg: 'Contraseña actualizada con exito'
     })
@@ -82,6 +83,8 @@ const forgetPassword = async (req, res, model) => {
   try {
     usuario.token = generarId(usuario._id)
     await usuario.save()
+    console.log(usuario);
+    emailRecuperar(usuario)
     res.json({
       msg: 'Se ha enviado un email para reestablecer tu contraseña'
     })
