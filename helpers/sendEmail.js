@@ -1,7 +1,7 @@
 import { transporter } from '../config/mailer.js'
 
 export const emailRegistro = async (datos) => {
-  const { email, nombre, token } = datos
+  const { email, nombre, token, tipo } = datos
   await transporter.sendMail({
     from: '"PetTransity - Animales en Transito" <PetTransity@PetTransity.com>', // sender address
     to: email, // list of receivers
