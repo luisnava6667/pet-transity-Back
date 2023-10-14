@@ -14,9 +14,7 @@ const nuevoUsuario = async (req, res) => {
 const autenticar = async (req, res) => {
   await authenticated(req, res, Usuario)
 }
-const confirmar = async (req, res) => {
-  await confirm(req, res, Usuario)
-}
+
 const olvidePassword = async (req, res) => {
   await forgetPassword(req, res, Usuario)
 }
@@ -34,7 +32,6 @@ const perfil = async (req, res) => {
 export {
   nuevoUsuario,
   autenticar,
-  confirmar,
   comprobarToken,
   olvidePassword,
   nuevoPassword,

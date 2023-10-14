@@ -2,7 +2,6 @@ import express from 'express'
 import {
   autenticarRegfugio,
   comprobarTokenRegfugio,
-  confirmarRegfugio,
   nuevoPasswordRegfugio,
   nuevoRegfugio,
   olvidePasswordRegfugio,
@@ -15,7 +14,6 @@ const router = express.Router()
 
 router.post('/', nuevoRegfugio)
 router.post('/login', autenticarRegfugio)
-router.get('/confirmar/:token', confirmarRegfugio)
 router.post('/olvide-password', olvidePasswordRegfugio)
 router
   .route('/olvide-password/:token')

@@ -2,6 +2,10 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import { animalesRoutes, refugioRoutes, usuarioRoutes } from './routes/index.js'
+import Refugio from './models/Refugio.js'
+import Usuario from './models/Usuario.js'
+import { confirm } from './controllers/controllers.js'
+
 
 const app = express()
 
@@ -10,17 +14,15 @@ dotenv.config()
 
 connectDB()
 
-// app.use((_req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', '*')
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-//   next()
-// })
+
 app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   next()
+})
+app.get('/confirm/:token', (req, res) => {
+  confirm(req, res, [Refugio, Usuario])
 })
 app.use('/usuarios', usuarioRoutes)
 app.use('/refugio', refugioRoutes)

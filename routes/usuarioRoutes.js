@@ -2,7 +2,6 @@ import express from 'express'
 import {
   autenticar,
   comprobarToken,
-  confirmar,
   nuevoPassword,
   nuevoUsuario,
   olvidePassword,
@@ -15,7 +14,6 @@ const router = express.Router()
 
 router.post('/', nuevoUsuario)
 router.post('/login', autenticar)
-router.get('/confirmar/:token', confirmar)
 router.post('/olvide-password', olvidePassword)
 router.route('/olvide-password/:token').get(comprobarToken).post(nuevoPassword)
 router.get('/perfil', checkAuth(Usuario), perfil)

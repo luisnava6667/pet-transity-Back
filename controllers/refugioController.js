@@ -14,9 +14,7 @@ const nuevoRegfugio = async (req, res) => {
 const autenticarRegfugio = async (req, res) => {
   await authenticated(req, res, Refugio)
 }
-const confirmarRegfugio = async (req, res) => {
-  await confirm(req, res, Refugio)
-}
+
 const olvidePasswordRegfugio = async (req, res) => {
   await forgetPassword(req, res, Refugio)
 }
@@ -34,7 +32,6 @@ const perfilRegfugio = async (req, res) => {
 export {
   nuevoRegfugio,
   autenticarRegfugio,
-  confirmarRegfugio,
   comprobarTokenRegfugio,
   olvidePasswordRegfugio,
   nuevoPasswordRegfugio,

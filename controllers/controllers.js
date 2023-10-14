@@ -49,19 +49,29 @@ const authenticated = async (req, res, model) => {
     return res.status(400).send('Email o contraseña incorrectos')
   }
 }
-const confirm = async (req, res, model) => {
+const confirm = async (req, res, models) => {
   const { token } = req.params
-  const usuario = await model.findOne({ token })
-  if (!usuario) return res.status(400).send('Token invalido')
+
   try {
+    let usuario = null
+
+    for (const model of models) {
+      usuario = await model.findOne({ token })
+      if (usuario) break
+    }
+
+    if (!usuario) return res.status(400).send('Token inválido')
+
     usuario.confirmado = true
     usuario.token = ''
     await usuario.save()
+
     res.json({
-      msg: 'Usuario confirmado con exito'
+      msg: 'Usuario confirmado con éxito'
     })
   } catch (error) {
     console.log(error)
+    res.status(500).json({ error: 'Error al confirmar el usuario' })
   }
 }
 const checkToken = async (req, res, model) => {
@@ -83,7 +93,7 @@ const forgetPassword = async (req, res, model) => {
   try {
     usuario.token = generarId(usuario._id)
     await usuario.save()
-    console.log(usuario);
+    console.log(usuario)
     emailRecuperar(usuario)
     res.json({
       msg: 'Se ha enviado un email para reestablecer tu contraseña'
