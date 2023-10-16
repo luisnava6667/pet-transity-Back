@@ -74,6 +74,12 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
+  pets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Animales'
+    }
+  ],
   confirmado: {
     type: Boolean,
     default: false

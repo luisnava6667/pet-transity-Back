@@ -51,6 +51,12 @@ const animalesSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Usuario'
+    }
+  ],
   refugio: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Refugio'
