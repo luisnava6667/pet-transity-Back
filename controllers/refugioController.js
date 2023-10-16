@@ -8,6 +8,10 @@ import {
   newPassword
 } from './controllers.js'
 
+const getAllRefugios = async (req, res) => {
+  const refugios = await Refugio.find()
+  res.json(refugios)
+}
 const nuevoRegfugio = async (req, res) => {
   await newEntrie(req, res, Refugio)
 }
@@ -30,6 +34,7 @@ const perfilRegfugio = async (req, res) => {
   res.json(usuario)
 }
 export {
+  getAllRefugios,
   nuevoRegfugio,
   autenticarRegfugio,
   comprobarTokenRegfugio,

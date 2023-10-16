@@ -2,6 +2,7 @@ import express from 'express'
 import {
   autenticarRegfugio,
   comprobarTokenRegfugio,
+  getAllRefugios,
   nuevoPasswordRegfugio,
   nuevoRegfugio,
   olvidePasswordRegfugio,
@@ -13,6 +14,7 @@ import checkAuth from '../middleware/checkAuth.js'
 const router = express.Router()
 
 router.post('/', nuevoRegfugio)
+router.get('/all', getAllRefugios)
 router.post('/login', autenticarRegfugio)
 router.post('/olvide-password', olvidePasswordRegfugio)
 router
