@@ -6,7 +6,6 @@ import Refugio from './models/Refugio.js'
 import Usuario from './models/Usuario.js'
 import { confirm } from './controllers/controllers.js'
 
-
 const app = express()
 
 app.use(express.json())
@@ -14,13 +13,7 @@ dotenv.config()
 
 connectDB()
 
-
-app.use((_req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  next()
-})
+app.enableCors()
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
 })
