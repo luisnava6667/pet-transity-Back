@@ -37,7 +37,8 @@ const authenticated = async (req, res, model) => {
   const { email, password } = req.body
   const usuario = await model.findOne({ email })
   if (!usuario) return res.status(400).json({ msg: 'Email no registrado' })
-  if (!usuario.confirmado) return res.status(400).send('Usuario no confirmado')
+  if (!usuario.confirmado)
+    return res.status(400).json({ msg: 'Usuario no confirmado' })
   if (await usuario.matchPassword(password)) {
     res.json({
       _id: usuario._id,
@@ -47,7 +48,7 @@ const authenticated = async (req, res, model) => {
       img: usuario.img
     })
   } else {
-    return res.status(400).send('Email o contraseña incorrectos')
+    return res.status(400).json({ msg: 'Email o contraseña incorrectos' })
   }
 }
 const confirm = async (req, res, models) => {
