@@ -36,7 +36,7 @@ const newPassword = async (req, res, model) => {
 const authenticated = async (req, res, model) => {
   const { email, password } = req.body
   const usuario = await model.findOne({ email })
-  if (!usuario) return res.status(400).send('Email o contraseña incorrectos')
+  if (!usuario) return res.status(400).json({ msg: 'Email no registrado' })
   if (!usuario.confirmado) return res.status(400).send('Usuario no confirmado')
   if (await usuario.matchPassword(password)) {
     res.json({
