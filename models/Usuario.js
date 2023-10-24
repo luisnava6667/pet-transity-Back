@@ -51,6 +51,10 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
+  telefono: {
+    type: String,
+    require: true
+  },
   hogar: {
     type: String,
     require: true
@@ -74,11 +78,12 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  img:{
+  img: {
     type: String,
-    default: 'https://cdn.create.vista.com/api/media/small/385289964/stock-vector-pet-adopt-family-plays-with-dog-at-animal-shelter'
+    default:
+      'https://cdn.create.vista.com/api/media/small/385289964/stock-vector-pet-adopt-family-plays-with-dog-at-animal-shelter'
   },
-    pets: [
+  pets: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Animales'
