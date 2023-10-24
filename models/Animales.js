@@ -33,13 +33,12 @@ const animalesSchema = mongoose.Schema({
     type: String
   },
   fecha_ingreso: {
-    type: Date,
-    default: Date.now,
+    type: String,
+
     required: true
   },
   fecha_egreso: {
-    type: Date,
-    default: Date.now,
+    type: String,
     required: true
   },
   estado: {
