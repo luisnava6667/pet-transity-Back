@@ -5,7 +5,7 @@ const newPet = async (req, res) => {
   const idRefugio = req.usuario._id
   const existeRefugio = await Refugio.findById(idRefugio)
   if (!existeRefugio) {
-    return res.status(404).json({ message: 'Refugio no encontrado' })
+    return res.status(404).json({ msg: 'Refugio no encontrado' })
   }
   try {
     const pet = new Animales(req.body)
@@ -23,12 +23,12 @@ const obtenerPets = async (req, res) => {
 
   const existeRefugio = await Refugio.findById(idRefugio)
   if (!existeRefugio) {
-    return res.status(404).json({ message: 'Refugio no encontrado' })
+    return res.status(404).json({ msg: 'Refugio no encontrado' })
   }
   if (idRefugio.toString() !== existeRefugio._id.toString()) {
     return res
       .status(404)
-      .json({ message: 'No tienes permiso para ver estos datos' })
+      .json({ msg: 'No tienes permiso para ver estos datos' })
   } else {
     const pets = await Animales.find({ refugio: idRefugio })
     res.status(200).json(pets)
@@ -38,12 +38,12 @@ const petId = async (req, res) => {
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
-    return res.status(404).json({ message: 'Mascota no encontrada' })
+    return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
   if (pet.refugio.toString() !== req.usuario._id.toString()) {
     return res
       .status(404)
-      .json({ message: 'No tienes permiso para ver estos datos' })
+      .json({ msg: 'No tienes permiso para ver estos datos' })
   }
   res.status(200).json(pet)
 }
@@ -51,12 +51,12 @@ const updatePet = async (req, res) => {
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
-    return res.status(404).json({ message: 'Mascota no encontrada' })
+    return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
   if (pet.refugio.toString() !== req.usuario._id.toString()) {
     return res
       .status(404)
-      .json({ message: 'No tienes permiso para ver estos datos' })
+      .json({ msg: 'No tienes permiso para ver estos datos' })
   }
 
   pet.especie = req.body.especie || pet.especie
@@ -77,16 +77,16 @@ const deletePet = async (req, res) => {
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
-    return res.status(404).json({ message: 'Mascota no encontrada' })
+    return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
   if (pet.refugio.toString() !== req.usuario._id.toString()) {
     return res
       .status(404)
-      .json({ message: 'No tienes permiso para ver estos datos' })
+      .json({ msg: 'No tienes permiso para ver estos datos' })
   }
   try {
     await Animales.findByIdAndDelete(id)
-    res.status(200).json({ message: 'Mascota eliminada' })
+    res.status(200).json({ msg: 'Mascota eliminada' })
   } catch (error) {
     console.log(error)
   }

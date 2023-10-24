@@ -26,7 +26,7 @@ const animalesSchema = mongoose.Schema({
     required: true,
     enum: ['Chico', 'Mediano', 'Grande']
   },
-  personal: {
+  personalidad: {
     type: String
   },
   salud: {
@@ -62,7 +62,6 @@ const animalesSchema = mongoose.Schema({
     ref: 'Refugio'
   }
 })
-//! Solo para capital federal
 
 const Animales = mongoose.model('Animales', animalesSchema)
 export default Animales
