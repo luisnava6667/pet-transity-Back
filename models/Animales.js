@@ -39,7 +39,7 @@ const animalesSchema = mongoose.Schema({
   },
   fecha_egreso: {
     type: String,
-    required: true
+    // required: true
   },
   estado: {
     type: Boolean,
