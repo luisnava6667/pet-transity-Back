@@ -23,6 +23,10 @@ const refugioSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    default: 'refugio'
+  },
   email: {
     type: String,
     require: true,

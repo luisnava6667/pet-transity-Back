@@ -24,6 +24,7 @@ app.use((_req, res, next) => {
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
 })
+
 app.use('/usuarios', usuarioRoutes)
 app.use('/refugio', refugioRoutes)
 app.use('/animales', animalesRoutes)

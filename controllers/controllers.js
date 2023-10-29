@@ -45,7 +45,8 @@ const authenticated = async (req, res, model) => {
       nombre: usuario.nombre,
       email: usuario.email,
       token: generarJWT(usuario._id),
-      img: usuario.img
+      img: usuario.img,
+      role: usuario.role
     })
   } else {
     return res.status(400).json({ msg: 'Email o contraseña incorrectos' })

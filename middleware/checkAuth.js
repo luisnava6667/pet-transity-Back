@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import Usuario from '../models/Usuario.js'
 
 const checkAuth = (model) => async (req, res, next) => {
   let token
@@ -9,9 +8,11 @@ const checkAuth = (model) => async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(' ')[1]
-      console.log(token);
+      console.log(String(token)) // Asegúrate de que el token tenga el formato correcto
+      const decoded = jwt.verify(String(token), process.env.JWT_SECRET) // Verifica el token
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      console.log('Token decodificado:')
+      console.log(decoded) // Imprime el token decodificado
 
       req.usuario = await model
         .findById(decoded.id)
@@ -19,16 +20,9 @@ const checkAuth = (model) => async (req, res, next) => {
 
       return next()
     } catch (error) {
+      console.log({ error }) // Imprime cualquier error que ocurra durante la verificación del token
       return res.status(404).json({ msg: 'Hubo un error' })
     }
   }
-
-  if (!token) {
-    const error = new Error('Token no válido')
-    return res.status(401).json({ msg: error.message })
-  }
-
-  next()
 }
-
 export default checkAuth
