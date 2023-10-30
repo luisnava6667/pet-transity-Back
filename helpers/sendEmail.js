@@ -11,7 +11,7 @@ export const emailRegistro = async (datos) => {
         <p>Hola ${nombre},</p> 
         <p>Gracias por registrarte en PetTransity.</p>
         <p>Para confirmar tu cuenta, por favor haz click en el siguiente enlace:</p>
-        <a href="http://localhost:3000/confirmar/${token}">Confirmar cuenta</a>
+        <a href="http://localhost:5173/confirmar/${token}">Confirmar cuenta</a>
     ` // html body
   })
 }
@@ -25,7 +25,7 @@ export const emailRecuperar = async (datos) => {
     html: `
         <p>Hola ${nombre},</p> 
         <p>Para recuperar tu contraseña, por favor haz click en el siguiente enlace:</p>
-        <a href="http://localhost:3000/recuperar/${token}">Recuperar contraseña</a>
+        <a href="http://localhost:5173/recuperar/${token}">Recuperar contraseña</a>
     `
   })
 }
