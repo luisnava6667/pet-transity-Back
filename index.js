@@ -4,7 +4,12 @@ import connectDB from './config/db.js'
 import { animalesRoutes, refugioRoutes, usuarioRoutes } from './routes/index.js'
 import Refugio from './models/Refugio.js'
 import Usuario from './models/Usuario.js'
-import { confirm, newPassword } from './controllers/controllers.js'
+import {
+  checkToken,
+  checkTokenPassword,
+  confirm,
+  newPassword
+} from './controllers/controllers.js'
 
 const app = express()
 
@@ -22,9 +27,15 @@ app.use((_req, res, next) => {
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
 })
-app.post('/nuevo-password/:token', (req, res) => {
-  newPassword(req, res, [Refugio, Usuario])
-})
+const verificarToken = async (req, res, next) => {
+  await checkTokenPassword(req, res, [Refugio, Usuario])
+  next()
+}
+const confirmarPassword = async (req, res, next) => {
+  await newPassword(req, res, [Refugio, Usuario])
+}
+
+app.route('/nuevo-password/:token').get(verificarToken).post(confirmarPassword)
 
 app.use('/usuarios', usuarioRoutes)
 app.use('/refugio', refugioRoutes)

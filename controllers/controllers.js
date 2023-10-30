@@ -20,35 +20,23 @@ const newEntrie = async (req, res, model, tipo) => {
 const newPassword = async (req, res, models) => {
   const { token } = req.params
   const { password } = req.body
-  // const usuario = await model.findOne({ token })
-  // if (usuario) {
-  //   usuario.password = password
-  //   usuario.token = ''
-  //   await usuario.save()
-
-  //   res.json({
-  //     msg: 'Contraseña actualizada con exito'
-  //   })
-  // } else {
-  //   return res.status(400).send('Token invalido')
-  // }
-    try{
-      let usuario = null
-      for(const model of models){
-        usuario = await model.findOne({token})
-        if(usuario) break
-      }
-      if(!usuario) return res.status(400).send('Token invalido')
-      usuario.password = password
-      usuario.token = ''
-      await usuario.save()
-      res.json({
-        msg: 'Contraseña actualizada con exito'
-      })
-    }catch(error){
-      console.log(error)
-      res.status(500).json({error: 'Error al actualizar la contraseña'})
+  try {
+    let usuario = null
+    for (const model of models) {
+      usuario = await model.findOne({ token })
+      if (usuario) break
     }
+    if (!usuario) return res.status(400).send('Token invalido')
+    usuario.password = password
+    usuario.token = ''
+    await usuario.save()
+    res.json({
+      msg: 'Contraseña actualizada con exito'
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Error al actualizar la contraseña' })
+  }
 }
 const authenticated = async (req, res, model) => {
   const { email, password } = req.body
@@ -105,7 +93,28 @@ const checkToken = async (req, res, model) => {
     return res.status(400).send('Token invalido')
   }
 }
+const checkTokenPassword = async (req, res, models) => {
+  
+    let usuario = null
 
+    const { token } = req.params
+
+    for (const model of models) {
+      usuario = await model.findOne({ token })
+      if (usuario) break
+    }
+    if (!usuario) return res.status(400).send('Token inválido')
+
+    // const tokenValido = await model.findOne({ token })
+    if (usuario.token === token) {
+      res.json({
+        msg: 'Token valido'
+      })
+    } else {
+      return res.status(400).send('Token invalido')
+    }
+
+}
 const forgetPassword = async (req, res, model) => {
   const { email } = req.body
   const usuario = await model.findOne({ email })
@@ -113,7 +122,6 @@ const forgetPassword = async (req, res, model) => {
   try {
     usuario.token = generarId(usuario._id)
     await usuario.save()
-    console.log(usuario)
     emailRecuperar(usuario)
     res.json({
       msg: 'Se ha enviado un email para reestablecer tu contraseña'
@@ -128,5 +136,6 @@ export {
   confirm,
   checkToken,
   forgetPassword,
+  checkTokenPassword,
   newPassword
 }
