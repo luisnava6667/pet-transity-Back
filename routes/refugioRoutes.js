@@ -17,9 +17,9 @@ router.post('/', nuevoRegfugio)
 router.get('/all', getAllRefugios)
 router.post('/login', autenticarRegfugio)
 router.post('/olvide-password', olvidePasswordRegfugio)
-router
-  .route('/olvide-password/:token')
-  .get(comprobarTokenRegfugio)
-  .post(nuevoPasswordRegfugio)
+// router
+//   .route('/olvide-password/:token')
+//   .get(comprobarTokenRegfugio)
+//   .post(nuevoPasswordRegfugio)
 router.get('/perfil', checkAuth(Refugio), perfilRegfugio)
 export default router

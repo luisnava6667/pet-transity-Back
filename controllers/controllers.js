@@ -17,21 +17,38 @@ const newEntrie = async (req, res, model, tipo) => {
     console.log(error)
   }
 }
-const newPassword = async (req, res, model) => {
+const newPassword = async (req, res, models) => {
   const { token } = req.params
   const { password } = req.body
-  const usuario = await model.findOne({ token })
-  if (usuario) {
-    usuario.password = password
-    usuario.token = ''
-    await usuario.save()
+  // const usuario = await model.findOne({ token })
+  // if (usuario) {
+  //   usuario.password = password
+  //   usuario.token = ''
+  //   await usuario.save()
 
-    res.json({
-      msg: 'Contraseña actualizada con exito'
-    })
-  } else {
-    return res.status(400).send('Token invalido')
-  }
+  //   res.json({
+  //     msg: 'Contraseña actualizada con exito'
+  //   })
+  // } else {
+  //   return res.status(400).send('Token invalido')
+  // }
+    try{
+      let usuario = null
+      for(const model of models){
+        usuario = await model.findOne({token})
+        if(usuario) break
+      }
+      if(!usuario) return res.status(400).send('Token invalido')
+      usuario.password = password
+      usuario.token = ''
+      await usuario.save()
+      res.json({
+        msg: 'Contraseña actualizada con exito'
+      })
+    }catch(error){
+      console.log(error)
+      res.status(500).json({error: 'Error al actualizar la contraseña'})
+    }
 }
 const authenticated = async (req, res, model) => {
   const { email, password } = req.body

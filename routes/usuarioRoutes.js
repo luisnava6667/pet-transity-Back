@@ -15,7 +15,7 @@ const router = express.Router()
 router.post('/', nuevoUsuario)
 router.post('/login', autenticar)
 router.post('/olvide-password', olvidePassword)
-router.route('/olvide-password/:token').get(comprobarToken).post(nuevoPassword)
+// router.route('/olvide-password/:token').get(comprobarToken).post(nuevoPassword)
 router.get('/perfil', checkAuth(Usuario), perfil)
 
 export default router

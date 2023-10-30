@@ -4,8 +4,7 @@ import connectDB from './config/db.js'
 import { animalesRoutes, refugioRoutes, usuarioRoutes } from './routes/index.js'
 import Refugio from './models/Refugio.js'
 import Usuario from './models/Usuario.js'
-import { confirm } from './controllers/controllers.js'
-
+import { confirm, newPassword } from './controllers/controllers.js'
 
 const app = express()
 
@@ -13,7 +12,6 @@ app.use(express.json())
 dotenv.config()
 
 connectDB()
-
 
 app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -23,6 +21,9 @@ app.use((_req, res, next) => {
 })
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
+})
+app.get('/nuevo-password/:token', (req, res) => {
+  newPassword(req, res, [Refugio, Usuario])
 })
 
 app.use('/usuarios', usuarioRoutes)
@@ -34,3 +35,4 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`⚡️ Server running on port ${PORT}!!! ⚡️`)
 })
+//
