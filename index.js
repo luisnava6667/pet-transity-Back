@@ -22,7 +22,7 @@ app.use((_req, res, next) => {
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
 })
-app.get('/nuevo-password/:token', (req, res) => {
+app.post('/nuevo-password/:token', (req, res) => {
   newPassword(req, res, [Refugio, Usuario])
 })
 
