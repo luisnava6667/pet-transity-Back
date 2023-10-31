@@ -2,7 +2,12 @@ import Animales from '../models/Animales.js'
 import Refugio from '../models/Refugio.js'
 
 const newPet = async (req, res) => {
-  const idRefugio = req.usuario._id
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
+  const idRefugio = req.usuario.id
   const existeRefugio = await Refugio.findById(idRefugio)
   if (!existeRefugio) {
     return res.status(404).json({ msg: 'Refugio no encontrado' })
@@ -19,7 +24,7 @@ const newPet = async (req, res) => {
   }
 }
 const obtenerPets = async (req, res) => {
-  const idRefugio = req.usuario._id
+  
 
   const existeRefugio = await Refugio.findById(idRefugio)
   if (!existeRefugio) {

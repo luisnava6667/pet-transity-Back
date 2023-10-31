@@ -1,12 +1,18 @@
 import express from 'express'
-import checkRefugio from '../middleware/checkRefugio.js'
-import { deletePet, newPet, obtenerPets, petId, updatePet } from '../controllers/index.js'
+import {
+  deletePet,
+  newPet,
+  obtenerPets,
+  petId,
+  updatePet
+} from '../controllers/index.js'
 import Refugio from '../models/Refugio.js'
 import checkAuth from '../middleware/checkAuth.js'
+import checkRefugio from '../middleware/checkRefugio.js'
 const router = express.Router()
 
 router.post('/', checkAuth(Refugio), newPet)
-router.get('/', checkAuth(Refugio), obtenerPets)
+router.get('/', obtenerPets)
 
 router
   .route('/:id')

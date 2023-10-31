@@ -8,12 +8,7 @@ const checkAuth = (model) => async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(' ')[1]
-      console.log(String(token)) // Asegúrate de que el token tenga el formato correcto
-      const decoded = jwt.verify(String(token), process.env.JWT_SECRET) // Verifica el token
-
-      console.log('Token decodificado:')
-      console.log(decoded) // Imprime el token decodificado
-
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) // Verifica el token
       req.usuario = await model
         .findById(decoded.id)
         .select('-password -confirmado -token -createdAt -updatedAt -__v')
@@ -24,5 +19,6 @@ const checkAuth = (model) => async (req, res, next) => {
       return res.status(404).json({ msg: 'Hubo un error' })
     }
   }
+  next()
 }
 export default checkAuth
