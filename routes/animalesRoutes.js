@@ -16,7 +16,7 @@ const router = express.Router()
 
 router.post('/', checkAuth(Refugio), newPet)
 router.get('/myPets', checkAuth(Refugio), obtenerMiPets)
-router.get('/', obtenerPets)
+router.get('/',checkAuth(Usuario), obtenerPets)
 
 router.get('/:id', checkAuth(Usuario), petId)
 router
