@@ -23,8 +23,13 @@ const newPet = async (req, res) => {
     console.log(error)
   }
 }
-const obtenerPets = async (req, res) => {
-  
+const obtenerMiPets = async (req, res) => {
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
+  const idRefugio = req.usuario._id
 
   const existeRefugio = await Refugio.findById(idRefugio)
   if (!existeRefugio) {
@@ -39,13 +44,35 @@ const obtenerPets = async (req, res) => {
     res.status(200).json(pets)
   }
 }
+const obtenerPets = async (req, res) => {
+  const pets = await Animales.find()
+  res.status(200).json(pets)
+}
 const petId = async (req, res) => {
+   if (!req.usuario?.id) {
+     return res
+       .status(404)
+       .json({ msg: 'No tienes acceso para realizar esta operacion' })
+   }
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
-  if (pet.refugio.toString() !== req.usuario._id.toString()) {
+  res.status(200).json(pet)
+}
+const myPetId = async (req, res) => {
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
+  const { id } = req.params
+  const pet = await Animales.findById(id)
+  if (!pet) {
+    return res.status(404).json({ msg: 'Mascota no encontrada' })
+  }
+  if (pet.refugio.toString() !== req.usuario.id.toString()) {
     return res
       .status(404)
       .json({ msg: 'No tienes permiso para ver estos datos' })
@@ -96,4 +123,12 @@ const deletePet = async (req, res) => {
     console.log(error)
   }
 }
-export { newPet, obtenerPets, petId, updatePet, deletePet }
+export {
+  newPet,
+  obtenerPets,
+  obtenerMiPets,
+  myPetId,
+  petId,
+  updatePet,
+  deletePet
+}
