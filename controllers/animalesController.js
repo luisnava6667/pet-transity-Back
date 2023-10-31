@@ -45,6 +45,11 @@ const obtenerMiPets = async (req, res) => {
   }
 }
 const obtenerPets = async (req, res) => {
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
   const pets = await Animales.find()
   res.status(200).json(pets)
 }
