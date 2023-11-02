@@ -3,6 +3,8 @@ import {
   autenticarRegfugio,
   comprobarTokenRegfugio,
   getAllRefugios,
+  getRefugioById,
+  changeState,
   nuevoPasswordRegfugio,
   nuevoRegfugio,
   olvidePasswordRegfugio,
@@ -15,6 +17,8 @@ const router = express.Router()
 
 router.post('/', nuevoRegfugio)
 router.get('/all', getAllRefugios)
+router.get('/:id', getRefugioById)
+router.post('/state',checkAuth(Refugio), changeState)
 router.post('/login', autenticarRegfugio)
 router.post('/olvide-password', olvidePasswordRegfugio)
 // router
