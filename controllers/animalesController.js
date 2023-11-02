@@ -64,7 +64,11 @@ const petId = async (req, res) => {
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
-  res.status(200).json(pet)
+  const refugio = await Refugio.findById(pet.refugio)
+  
+  
+  res.status(200).json({pet, refugio})
+
 }
 const myPetId = async (req, res) => {
   if (!req.usuario?.id) {

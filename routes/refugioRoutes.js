@@ -12,18 +12,20 @@ import {
 } from '../controllers/index.js'
 import Refugio from '../models/Refugio.js'
 import checkAuth from '../middleware/checkAuth.js'
+import checkRefugio from '../middleware/checkRefugio.js'
 
 const router = express.Router()
 
-router.post('/', nuevoRegfugio)
 router.get('/all', getAllRefugios)
-router.get('/:id', getRefugioById)
-router.post('/state',checkAuth(Refugio), changeState)
+router.post('/', nuevoRegfugio)
+// router.post('/state', checkAuth(Refugio), changeState)
 router.post('/login', autenticarRegfugio)
 router.post('/olvide-password', olvidePasswordRegfugio)
 // router
+router.get('/perfil', checkAuth(Refugio), perfilRegfugio)
+
+// router.get('/view/:id', getRefugioById)
 //   .route('/olvide-password/:token')
 //   .get(comprobarTokenRegfugio)
 //   .post(nuevoPasswordRegfugio)
-router.get('/perfil', checkAuth(Refugio), perfilRegfugio)
 export default router

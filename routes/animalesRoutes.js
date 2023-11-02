@@ -16,12 +16,12 @@ const router = express.Router()
 
 router.post('/', checkAuth(Refugio), newPet)
 router.get('/myPets', checkAuth(Refugio), obtenerMiPets)
-router.get('/',checkAuth(Usuario), obtenerPets)
+router.get('/', checkAuth(Usuario), obtenerPets)
 
-router.get('/:id', checkAuth(Usuario), petId)
 router
   .route('/myPet/:id')
   .get(checkAuth(Refugio), myPetId)
   .put(checkAuth(Refugio), updatePet)
   .delete(checkAuth(Refugio), deletePet)
+router.get('/view/:id', checkAuth(Usuario), petId)
 export default router
