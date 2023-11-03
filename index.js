@@ -18,12 +18,23 @@ dotenv.config()
 
 connectDB()
 
-app.use((_req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  next()
-})
+const whitelist = [process.env.FRONTEND_URL]
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      // Puede consultar la API
+      callback(null, true)
+    } else {
+      // No esta permitido
+      callback(new Error('Error de Cors'))
+    }
+  }
+}
+
+app.use(cors(corsOptions))
+
+
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])
 })
