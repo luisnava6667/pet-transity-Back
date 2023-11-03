@@ -10,6 +10,8 @@ import {
   confirm,
   newPassword
 } from './controllers/controllers.js'
+import cors from "cors";
+
 
 const app = express()
 
