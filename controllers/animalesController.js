@@ -54,21 +54,19 @@ const obtenerPets = async (req, res) => {
   res.status(200).json(pets)
 }
 const petId = async (req, res) => {
-   if (!req.usuario?.id) {
-     return res
-       .status(404)
-       .json({ msg: 'No tienes acceso para realizar esta operacion' })
-   }
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
   const refugio = await Refugio.findById(pet.refugio)
-  
-  
-  res.status(200).json({pet, refugio})
 
+  res.status(200).json({ pet, refugio })
 }
 const myPetId = async (req, res) => {
   if (!req.usuario?.id) {
@@ -89,6 +87,7 @@ const myPetId = async (req, res) => {
   res.status(200).json(pet)
 }
 const updatePet = async (req, res) => {
+  
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {

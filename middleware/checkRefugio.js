@@ -7,17 +7,17 @@ const checkRefugio = async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
     ) {
-    console.log(token);
+    // console.log(token);
     try {
       token = req.headers.authorization.split(' ')[1]
-      console.log(token)
+      // console.log(token)
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      console.log(decoded)
-      console.log(decoded.id)
+      // console.log(decoded)
+      // console.log(decoded.id)
       req.usuario = await Refugio.findById(decoded.id).select(
         '-password -confirmado -token -createdAt -updatedAt -__v'
       )
-      console.log(req.usuario)
+      // console.log(req.usuario)
       return next()
     } catch (error) {
       return res.status(404).json({ msg: 'Hubo un error' })

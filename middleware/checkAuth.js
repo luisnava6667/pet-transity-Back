@@ -13,7 +13,7 @@ const checkAuth = (model) => async (req, res, next) => {
       req.usuario = await model
         .findById(decoded.id)
         .select('-password -confirmado -token -createdAt -updatedAt -__v')
-      console.log({ usuario: req.usuario })
+      // console.log({ usuario: req.usuario })
       return next()
     } catch (error) {
       console.log(error) // Imprime cualquier error que ocurra durante la verificación del token

@@ -21,7 +21,9 @@ router.get('/', checkAuth(Usuario), obtenerPets)
 router
   .route('/myPet/:id')
   .get(checkAuth(Refugio), myPetId)
-  .put(checkAuth(Refugio), updatePet)
   .delete(checkAuth(Refugio), deletePet)
+router.put('/myPet/:id', checkAuth(Refugio), 
+updatePet
+)
 router.get('/view/:id', checkAuth(Usuario), petId)
 export default router
