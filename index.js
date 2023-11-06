@@ -22,17 +22,18 @@ connectDB()
 const whitelist = [process.env.FRONTEND_URL]
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.includes(origin)) {
-      // Puede consultar la API
-      console.log(`Solicitud desde origen permitido: ${origin}`)
-      callback(null, true)
-    } else {
-      // No está permitido
-      console.log(`Solicitud desde origen no permitido: ${origin}`)
-      callback(new Error('Error de Cors'))
-    }
-  }
+  origin: '*'
+  // function (origin, callback) {
+  //   if (whitelist.includes(origin)) {
+  //     // Puede consultar la API
+  //     console.log(`Solicitud desde origen permitido: ${origin}`)
+  //     callback(null, true)
+  //   } else {
+  //     // No está permitido
+  //     console.log(`Solicitud desde origen no permitido: ${origin}`)
+  //     callback(new Error('Error de Cors'))
+  //   }
+  // }
 }
 
 app.use(cors(corsOptions))

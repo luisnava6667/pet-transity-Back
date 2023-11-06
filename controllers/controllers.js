@@ -2,9 +2,14 @@ import { generarId, generarJWT } from '../helpers/index.js'
 import { emailRecuperar, emailRegistro } from '../helpers/sendEmail.js'
 const newEntrie = async (req, res, model, tipo) => {
   const { email } = req.body
+  
   const existeUsuario = await model.findOne({ email })
-  if (existeUsuario)
-    return res.status(400).send('Ya hay un usuario registrado con ese email')
+
+  if (existeUsuario.email === email) {
+    
+    const error = new Error('Ya hay un usuario registrado con ese email')
+    return res.status(400).json({ msg: error.message })
+  }
   try {
     const usuario = new model(req.body)
     usuario.token = generarId(usuario._id)
@@ -94,26 +99,24 @@ const checkToken = async (req, res, model) => {
   }
 }
 const checkTokenPassword = async (req, res, models) => {
-  
-    let usuario = null
+  let usuario = null
 
-    const { token } = req.params
+  const { token } = req.params
 
-    for (const model of models) {
-      usuario = await model.findOne({ token })
-      if (usuario) break
-    }
-    if (!usuario) return res.status(400).send('Token inválido')
+  for (const model of models) {
+    usuario = await model.findOne({ token })
+    if (usuario) break
+  }
+  if (!usuario) return res.status(400).send('Token inválido')
 
-    // const tokenValido = await model.findOne({ token })
-    if (usuario.token === token) {
-      res.json({
-        msg: 'Token valido'
-      })
-    } else {
-      return res.status(400).send('Token invalido')
-    }
-
+  // const tokenValido = await model.findOne({ token })
+  if (usuario.token === token) {
+    res.json({
+      msg: 'Token valido'
+    })
+  } else {
+    return res.status(400).send('Token invalido')
+  }
 }
 const forgetPassword = async (req, res, model) => {
   const { email } = req.body
