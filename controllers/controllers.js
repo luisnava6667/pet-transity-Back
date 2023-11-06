@@ -2,11 +2,8 @@ import { generarId, generarJWT } from '../helpers/index.js'
 import { emailRecuperar, emailRegistro } from '../helpers/sendEmail.js'
 const newEntrie = async (req, res, model, tipo) => {
   const { email } = req.body
-  console.log(email);
   const existeUsuario = await model.findOne({ email })
-
-  if (existeUsuario.email === email) {
-    
+  if (existeUsuario) {
     const error = new Error('Ya hay un usuario registrado con ese email')
     return res.status(400).json({ msg: error.message })
   }
