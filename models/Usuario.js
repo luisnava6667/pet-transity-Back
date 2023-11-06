@@ -77,7 +77,7 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  img: {
+  avatar: {
     type: String,
     default:
       'https://cdn.create.vista.com/api/media/small/385289964/stock-vector-pet-adopt-family-plays-with-dog-at-animal-shelter'
@@ -94,12 +94,6 @@ const usuarioSchema = mongoose.Schema({
       ref: 'Historial'
     }
   ],
-  lat: {
-    type: Number
-  },
-  lng: {
-    type: Number
-  },
   confirmado: {
     type: Boolean,
     default: false

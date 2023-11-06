@@ -131,6 +131,31 @@ const deletePet = async (req, res) => {
     console.log(error)
   }
 }
+const changeState = async (req, res) => {
+  const { id } = req.usuario
+  const {idAnimal} = req.params
+  const refugio = await Refugio.findById(id)
+  const pet = await Animales.findById(idAnimal)
+  if (!pet) {
+    return res.status(404).json({ msg: 'Mascota no encontrada' })
+  }
+  if (!refugio) {
+    return res.status(404).json({ msg: 'Refugio no encontrado' })
+  }
+  if (pet.refugio.toString() !== req.usuario._id.toString()) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes permiso para ver estos datos' })
+  }
+  pet.estado = !pet.estado
+  await pet.save()
+  res.status(200).json(pet)
+
+
+  // refugio.estado = estado
+  // await refugio.save()
+  // res.status(200).json(refugio)
+}
 export {
   newPet,
   obtenerPets,
@@ -138,5 +163,6 @@ export {
   myPetId,
   petId,
   updatePet,
-  deletePet
+  deletePet,
+  changeState
 }

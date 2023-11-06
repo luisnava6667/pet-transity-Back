@@ -10,8 +10,7 @@ import {
   confirm,
   newPassword
 } from './controllers/controllers.js'
-import cors from "cors";
-
+import cors from 'cors'
 
 const app = express()
 
@@ -35,7 +34,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-
 
 app.get('/confirm/:token', (req, res) => {
   confirm(req, res, [Refugio, Usuario])

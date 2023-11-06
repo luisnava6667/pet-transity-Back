@@ -14,10 +14,8 @@ const refugioSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  img: {
-    type: String,
-    default:
-      'https://img.freepik.com/vector-premium/refugio-perros-ilustracion-personaje-mujer-hombre-gente-mascota-dibujos-animados-cachorro-hogar-jaula-mira-familia-padre-e-hijo-preocupan-perro-callejero-feliz-ayuda-rescate-adopta-diseno_169479-1292.jpg'
+  avatar: {
+    type: String
   },
   cuit: {
     type: String,
@@ -46,19 +44,19 @@ const refugioSchema = mongoose.Schema({
   unidad: {
     type: String
   },
-  codigoPostal: {
-    type: String,
-    require: true
-  },
   provincia: {
     type: String,
     require: true,
     default: 'CABA'
   },
-  departamento: {
+  comuna: {
     type: String
   },
-  localidad: {
+  barrio: {
+    type: String,
+    require: true
+  },
+  codigoPostal: {
     type: String,
     require: true
   },
@@ -87,12 +85,6 @@ const refugioSchema = mongoose.Schema({
       ref: 'Animales'
     }
   ],
-  lat: {
-    type: Number
-  },
-  lng: {
-    type: Number
-  },
   token: {
     type: String
   },

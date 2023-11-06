@@ -50,7 +50,7 @@ const authenticated = async (req, res, model) => {
       nombre: usuario.nombre,
       email: usuario.email,
       token: generarJWT(usuario._id),
-      img: usuario.img,
+      avatar: usuario.avatar,
       role: usuario.role
     })
   } else {
@@ -130,6 +130,7 @@ const forgetPassword = async (req, res, model) => {
     console.log(error)
   }
 }
+
 export {
   newEntrie,
   authenticated,
