@@ -25,9 +25,11 @@ const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.includes(origin)) {
       // Puede consultar la API
+      console.log(`Solicitud desde origen permitido: ${origin}`)
       callback(null, true)
     } else {
-      // No esta permitido
+      // No está permitido
+      console.log(`Solicitud desde origen no permitido: ${origin}`)
       callback(new Error('Error de Cors'))
     }
   }
