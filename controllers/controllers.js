@@ -2,7 +2,7 @@ import { generarId, generarJWT } from '../helpers/index.js'
 import { emailRecuperar, emailRegistro } from '../helpers/sendEmail.js'
 const newEntrie = async (req, res, model, tipo) => {
   const { email } = req.body
-  
+  console.log(email);
   const existeUsuario = await model.findOne({ email })
 
   if (existeUsuario.email === email) {
