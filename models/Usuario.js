@@ -29,14 +29,14 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  // provincia: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Provincia'
-  // },
-  // departamento: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Departamento'
-  // },
+  provincia: {
+    type: String,
+    require: true,
+    default: 'CABA'
+  },
+  comuna: {
+    type: String
+  },
   localidad: {
     type: String,
     require: true
