@@ -49,6 +49,10 @@ const refugioSchema = mongoose.Schema({
     require: true,
     default: 'CABA'
   },
+  localidad: {
+    type: String,
+    require: true
+  },
   comuna: {
     type: String
   },

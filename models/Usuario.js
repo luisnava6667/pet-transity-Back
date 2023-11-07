@@ -45,12 +45,15 @@ const usuarioSchema = mongoose.Schema({
     type: String,
     default: 'usuarios'
   },
-
+  barrio: {
+    type: String,
+    require: true
+  },
   password: {
     type: String,
     require: true
   },
-  telefono: {
+  whatsApp: {
     type: String,
     require: true
   },
@@ -86,12 +89,6 @@ const usuarioSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Animales'
-    }
-  ],
-  historial: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Historial'
     }
   ],
   confirmado: {
