@@ -7,7 +7,8 @@ import {
   myPetId,
   petId,
   updatePet,
-  changeState
+  changeState,
+  newPetUser
 } from '../controllers/index.js'
 import Refugio from '../models/Refugio.js'
 import checkAuth from '../middleware/checkAuth.js'
@@ -16,6 +17,7 @@ import Usuario from '../models/Usuario.js'
 const router = express.Router()
 
 router.post('/', checkAuth(Refugio), newPet)
+router.post('/user', checkAuth(Usuario), newPetUser)
 router.get('/myPets', checkAuth(Refugio), obtenerMiPets)
 router.get('/', checkAuth(Usuario), obtenerPets)
 router.put('/state/:idAnimal', checkAuth(Refugio), changeState)

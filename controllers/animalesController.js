@@ -1,6 +1,29 @@
 import Animales from '../models/Animales.js'
 import Refugio from '../models/Refugio.js'
+import Usuario from '../models/Usuario.js'
+const newPetUser = async (req, res) => {
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
+  const idUsuario = req.usuario.id
+  const existeUsuario = await Usuario.findById(idUsuario)
+  if (!existeUsuario) {
+    return res.status(404).json({ msg: 'Usuario no encontrado' })
+  }
+  try {
+    const pet = new Animales(req.body)
+    pet.usuario = req.usuario._id
+    const petAlamcenado = await pet.save()
+    existeUsuario.pets.push(petAlamcenado._id)
+    await existeUsuario.save()
+    res.status(201).json(petAlamcenado)
+  } catch (error) {
+    console.log(error)
+  }
 
+}
 const newPet = async (req, res) => {
   if (!req.usuario?.id) {
     return res
@@ -157,6 +180,7 @@ const changeState = async (req, res) => {
   // res.status(200).json(refugio)
 }
 export {
+  newPetUser,
   newPet,
   obtenerPets,
   obtenerMiPets,

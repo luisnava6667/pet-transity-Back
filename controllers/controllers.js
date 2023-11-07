@@ -59,6 +59,29 @@ const authenticated = async (req, res, model) => {
     return res.status(400).json({ msg: 'Email o contraseña incorrectos' })
   }
 }
+const newAnimal = async (req, res, models) => {
+  if (!req.usuario?.id) {
+    return res
+      .status(404)
+      .json({ msg: 'No tienes acceso para realizar esta operacion' })
+  }
+  const id = req.usuario.id
+  try {
+    let usuario = null
+    
+    for (const model of models) {
+      usuario = await model.findOne({ id })
+      if (usuario) break
+    }
+    console.log(usuario)
+    
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Error al cargar el animal' })
+  }
+}
+
 const confirm = async (req, res, models) => {
   const { token } = req.params
 
@@ -138,5 +161,6 @@ export {
   checkToken,
   forgetPassword,
   checkTokenPassword,
-  newPassword
+  newPassword,
+  newAnimal
 }

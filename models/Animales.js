@@ -34,11 +34,11 @@ const animalesSchema = mongoose.Schema({
   },
   fecha_ingreso: {
     type: String,
-
+    default: Date,
     required: true
   },
   fecha_egreso: {
-    type: String,
+    type: String
     // required: true
   },
   estado: {
@@ -46,7 +46,7 @@ const animalesSchema = mongoose.Schema({
     required: true
   },
   //imagen del animal
-  image: {
+  avatar: {
     type: String,
     required: true
   },
