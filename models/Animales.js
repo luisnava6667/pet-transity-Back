@@ -59,6 +59,9 @@ const animalesSchema = mongoose.Schema({
   refugio: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Refugio'
+  },
+  observaciones: {
+    type: String
   }
 })
 
