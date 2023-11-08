@@ -20,7 +20,7 @@ router.post('/', checkAuth(Refugio), newPet)
 router.post('/user', checkAuth(Usuario), newPetUser)
 router.get('/myPets', checkAuth(Refugio), obtenerMiPets)
 router.get('/', checkAuth(Usuario), obtenerPets)
-router.put('/state/:idAnimal', checkAuth(Refugio), changeState)
+router.put('/state/:idAnimal', changeState)
 router
   .route('/myPet/:id')
   .get(checkAuth(Refugio), myPetId)

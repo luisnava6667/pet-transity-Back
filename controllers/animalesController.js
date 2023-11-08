@@ -22,7 +22,6 @@ const newPetUser = async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-
 }
 const newPet = async (req, res) => {
   if (!req.usuario?.id) {
@@ -110,7 +109,6 @@ const myPetId = async (req, res) => {
   res.status(200).json(pet)
 }
 const updatePet = async (req, res) => {
-  
   const { id } = req.params
   const pet = await Animales.findById(id)
   if (!pet) {
@@ -155,29 +153,17 @@ const deletePet = async (req, res) => {
   }
 }
 const changeState = async (req, res) => {
-  const { id } = req.usuario
-  const {idAnimal} = req.params
-  const refugio = await Refugio.findById(id)
+  const { idAnimal } = req.params
+  console.log(idAnimal)
+
   const pet = await Animales.findById(idAnimal)
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
-  if (!refugio) {
-    return res.status(404).json({ msg: 'Refugio no encontrado' })
-  }
-  if (pet.refugio.toString() !== req.usuario._id.toString()) {
-    return res
-      .status(404)
-      .json({ msg: 'No tienes permiso para ver estos datos' })
-  }
+
   pet.estado = !pet.estado
   await pet.save()
-  res.status(200).json(pet)
-
-
-  // refugio.estado = estado
-  // await refugio.save()
-  // res.status(200).json(refugio)
+  res.status(200).json({ mg: 'Estado cambiado' })
 }
 export {
   newPetUser,
