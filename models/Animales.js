@@ -48,7 +48,8 @@ const animalesSchema = mongoose.Schema({
   //imagen del animal
   avatar: {
     type: String,
-    required: true
+    default:
+      'https://images.vexels.com/media/users/3/201898/isolated/preview/55be9a1a39abff39bc3596e8ddd224cd-trazo-de-huella-de-perro-azul.png'
   },
   users: [
     {

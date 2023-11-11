@@ -15,7 +15,9 @@ const refugioSchema = mongoose.Schema({
     required: true
   },
   avatar: {
-    type: String
+    type: String,
+    default:
+      'https://images.vexels.com/media/users/3/201898/isolated/preview/55be9a1a39abff39bc3596e8ddd224cd-trazo-de-huella-de-perro-azul.png'
   },
   cuit: {
     type: String,

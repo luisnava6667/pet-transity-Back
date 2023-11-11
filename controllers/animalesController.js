@@ -1,28 +1,7 @@
 import Animales from '../models/Animales.js'
 import Refugio from '../models/Refugio.js'
 import Usuario from '../models/Usuario.js'
-const newPetUser = async (req, res) => {
-  if (!req.usuario?.id) {
-    return res
-      .status(404)
-      .json({ msg: 'No tienes acceso para realizar esta operacion' })
-  }
-  const idUsuario = req.usuario.id
-  const existeUsuario = await Usuario.findById(idUsuario)
-  if (!existeUsuario) {
-    return res.status(404).json({ msg: 'Usuario no encontrado' })
-  }
-  try {
-    const pet = new Animales(req.body)
-    pet.usuario = req.usuario._id
-    const petAlamcenado = await pet.save()
-    existeUsuario.pets.push(petAlamcenado._id)
-    await existeUsuario.save()
-    res.status(201).json(petAlamcenado)
-  } catch (error) {
-    console.log(error)
-  }
-}
+
 const newPet = async (req, res) => {
   if (!req.usuario?.id) {
     return res
@@ -154,19 +133,53 @@ const deletePet = async (req, res) => {
 }
 const changeState = async (req, res) => {
   const { idAnimal } = req.params
-  console.log(idAnimal)
-
   const pet = await Animales.findById(idAnimal)
+  const user = await Usuario.findById(pet.users)
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }
-
+  if (pet.estado === true) {
+    pet.users = null
+  }
   pet.estado = !pet.estado
+  if (pet.users) {
+    user.pets = user.pets.filter(
+      (pet) => pet.toString() !== idAnimal.toString()
+    )
+    await user.save()
+  }
+
   await pet.save()
   res.status(200).json({ mg: 'Estado cambiado' })
 }
+const asignedUser = async (req, res) => {
+  const { idAnimal } = req.params
+  const { email } = req.body
+  try {
+    const pet = await Animales.findById(idAnimal)
+    const usuario = await Usuario.findOne({ email })
+    if (!pet) {
+      return res.status(404).json({ msg: 'Mascota no encontrada' })
+    }
+    if (!usuario) {
+      return res.status(404).json({ msg: 'Usuario no encontrado' })
+    }
+    if (pet.refugio.toString() !== req.usuario._id.toString()) {
+      return res
+        .status(404)
+        .json({ msg: 'No tienes permiso para realizar esta operacion' })
+    }
+    pet.users = usuario._id
+    pet.estado = false
+    usuario.pets.push(pet._id)
+    await Promise.all([pet.save(), usuario.save()])
+    res.status(200).json({ msg: 'Usuario asignado' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ msg: 'Error en el servidor' })
+  }
+}
 export {
-  newPetUser,
   newPet,
   obtenerPets,
   obtenerMiPets,
@@ -174,5 +187,6 @@ export {
   petId,
   updatePet,
   deletePet,
-  changeState
+  changeState,
+  asignedUser
 }
