@@ -7,9 +7,10 @@ export const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.USERSENDMAIL,
-    pass: 'ueagvhdzcgtqitzj'
+    pass: 'rjmivzyowarrdsdd'
   }
 })
+// ueagvhdzcgtqitzj
 transporter.verify().then(() => {
   console.log('Ready for send emails')
 })
