@@ -115,26 +115,44 @@ const updatePet = async (req, res) => {
 }
 const deletePet = async (req, res) => {
   const { id } = req.params
-  const pet = await Animales.findById(id)
-  if (!pet) {
-    return res.status(404).json({ msg: 'Mascota no encontrada' })
-  }
-  if (pet.refugio.toString() !== req.usuario._id.toString()) {
-    return res
-      .status(404)
-      .json({ msg: 'No tienes permiso para ver estos datos' })
-  }
+  const idUser = req.usuario._id.toString()
+
   try {
+    // Verifica que el usuario existe
+    const user = await Refugio.findById(idUser)
+    if (!user) {
+      return res.status(404).json({ msg: 'Usuario no encontrado' })
+    }
+
+    // Verifica si la mascota existe
+    const pet = await Animales.findById(id)
+    if (!pet) {
+      return res.status(404).json({ msg: 'Mascota no encontrada' })
+    }
+
+    // Verifica si el usuario tiene permisos para eliminar la mascota
+    if (pet.refugio.toString() !== req.usuario._id.toString()) {
+      return res
+        .status(404)
+        .json({ msg: 'No tienes permiso para ver estos datos' })
+    }
+
+    // Actualiza el array de mascotas del usuario eliminando el ID de la mascota
+
+    // Puedes eliminar la mascota si es necesario
     await Animales.findByIdAndDelete(id)
-    res.status(200).json({ msg: 'Mascota eliminada' })
+    await Refugio.updateOne({ _id: idUser }, { $pull: { pets: id } })
+
+    res.status(200).json({ msg: 'Mascota eliminada del usuario' })
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    res.status(500).json({ msg: 'Error interno del servidor' })
   }
 }
 const changeState = async (req, res) => {
   const { idAnimal } = req.params
   const pet = await Animales.findById(idAnimal)
-  const user = await Usuario.findById(pet.users)
+
   if (!pet) {
     return res.status(404).json({ msg: 'Mascota no encontrada' })
   }

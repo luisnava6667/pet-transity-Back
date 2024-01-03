@@ -20,7 +20,6 @@ router.get('/all', getAllRefugios)
 router.post('/', nuevoRegfugio)
 
 router.post('/login', autenticarRegfugio)
-router.post('/olvide-password', olvidePasswordRegfugio)
 router.get('/perfil', checkAuth(Refugio), perfilRegfugio)
 router.put('/update-info', checkAuth(Refugio), updateRegfugio)
 
